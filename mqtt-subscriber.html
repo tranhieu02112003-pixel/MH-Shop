@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MQTT Subscriber - Shop Mini</title>
+</head>
+<body>
+<h2>MQTT Subscriber (mở trang này để nhận đơn trên máy tính)</h2>
+<p>Điền cấu hình broker bên dưới và nhấn Connect.</p>
+
+<label>Broker URL:</label><input id="broker" value="wss://broker.emqx.io:8084/mqtt" style="width:100%"><br>
+<label>Username:</label><input id="user" style="width:100%"><br>
+<label>Password:</label><input id="pass" style="width:100%"><br>
+<label>Topic:</label><input id="topic" value="shop/orders" style="width:100%"><br>
+<button id="btn">Connect</button>
+<pre id="log" style="background:#f0f0f0;padding:10px;height:300px;overflow:auto"></pre>
+
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script>
+document.getElementById('btn').addEventListener('click', () => {
+  const broker = document.getElementById('broker').value;
+  const user = document.getElementById('user').value;
+  const pass = document.getElementById('pass').value;
+  const topic = document.getElementById('topic').value || 'shop/orders';
+  const log = document.getElementById('log');
+
+  const client = mqtt.connect(broker, { username: user || undefined, password: pass || undefined });
+  client.on('connect', () => {
+    log.textContent += '\nConnected to ' + broker;
+    client.subscribe(topic);
+  });
+  client.on('message', (t, message) => {
+    const msg = message.toString();
+    log.textContent += '\n[' + new Date().toLocaleTimeString() + '] ' + t + ' => ' + msg;
+    try {
+      const data = JSON.parse(msg);
+      // Browser notification
+      if(Notification && Notification.permission === 'granted') {
+        new Notification('Đơn hàng mới', { body: data.name + ' — ' + data.productName + ' x' + data.qty });
+      }
+    } catch(e){}
+  });
+  if(Notification && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+});
+</script>
+</body>
+</html>

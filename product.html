@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chi tiết sản phẩm</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+  <h1>Shop Mini</h1>
+</header>
+
+<main class="container">
+  <div class="product-detail">
+    <img id="pimg" src="" alt="">
+    <h2 id="pname"></h2>
+    <p id="pprice" class="price"></p>
+    <p id="pdesc"></p>
+    <a id="orderBtn" class="btn" href="">Đặt hàng ngay</a>
+  </div>
+</main>
+
+<script src="product-data.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = Number(params.get('id')) || 1;
+const p = productList.find(x => x.id === id) || productList[0];
+document.getElementById('pimg').src = p.img;
+document.getElementById('pname').innerText = p.name;
+document.getElementById('pprice').innerText = p.price;
+document.getElementById('pdesc').innerText = p.description;
+document.getElementById('orderBtn').href = 'order.html?id=' + p.id;
+</script>
+</body>
+</html>

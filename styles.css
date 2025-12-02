@@ -1,0 +1,15 @@
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f7f7f7;color:#222}
+.header{background:#ff5722;color:white;padding:14px 16px}
+.header h1{margin:0;font-size:20px}
+.header .tag{opacity:0.95;margin-top:6px;font-size:13px}
+.container{max-width:960px;margin:18px auto;padding:0 12px}
+.title{text-align:center;margin:12px 0}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.product, .product-detail, form{background:white;padding:14px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.product img, .product-detail img{width:100%;border-radius:6px}
+.product h3{margin:8px 0 0;font-size:16px}
+.price{color:#d32f2f;font-weight:700;margin:6px 0}
+.btn{display:inline-block;background:#ff5722;color:white;padding:8px 12px;margin-top:10px;text-decoration:none;border-radius:6px}
+form input, form select{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:6px}
+@media(max-width:520px){.header h1{font-size:18px}}
